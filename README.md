@@ -2,8 +2,10 @@
 
 <p align="center"> A Natural language translation SD..</p>
 
+
 [![Build Status](https://travis-ci.com/aliliin/language-translation.svg?branch=master)](https://travis-ci.com/aliliin/language-translation)
 ![StyleCI build status](https://github.styleci.io/repos/266182741/shield)
+
 
 ## Installing
 
