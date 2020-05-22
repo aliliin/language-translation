@@ -1,0 +1,21 @@
+{
+    "name": "aliliin\/language-translation",
+    "description": "A Natural language translation SDK.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "aliliin",
+            "email": "phperali@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^6.5",
+        "phpunit/phpunit": "^9.1",
+        "mockery/mockery": "^1.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Aliliin\\LanguageTranslation\\": "src"
+        }
+    }
+}
