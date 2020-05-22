@@ -3,7 +3,7 @@
 /*
  * This file is part of the aliliin/language-translation.
  *
- * (c) Aliliin <PhperAli@Gmail.com>
+ * (c) aliliin <PhperAli@Gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -19,6 +19,6 @@ return [
         'language' => [
             'from' => env('TRANSLATION_FORM'),
             'to' => env('TRANSLATION_TO'),
-        ]
+        ],
     ],
 ];

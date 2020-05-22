@@ -1,8 +1,15 @@
 <?php
 
+/*
+ * This file is part of the aliliin/language-translation.
+ *
+ * (c) aliliin <PhperAli@Gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
 
 namespace Aliliin\LanguageTranslation;
-
 
 use Aliliin\LanguageTranslation\Exceptions\InvalidArgumentException;
 
@@ -33,7 +40,6 @@ class Factory
         $class = static::formatClassName($this->config['provider']);
 
         if (!class_exists($class)) {
-
             throw new InvalidArgumentException('Class is not exist!');
         }
 
@@ -49,6 +55,6 @@ class Factory
     {
         $provider = ucfirst($provider);
 
-        return __NAMESPACE__ . "\\Providers\\{$provider}";
+        return __NAMESPACE__."\\Providers\\{$provider}";
     }
 }
