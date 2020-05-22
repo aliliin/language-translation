@@ -1,13 +1,18 @@
 <?php
 
+/*
+ * This file is part of the aliliin/language-translation.
+ *
+ * (c) aliliin <PhperAli@Gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
 
 namespace Aliliin\LanguageTranslation\Providers;
 
-
 use Aliliin\LanguageTranslation\Exceptions\HttpException;
-
 use Aliliin\LanguageTranslation\Exceptions\InquiryErrorException;
-use Aliliin\LanguageTranslation\Exceptions\InvalidArgumentException;
 use Aliliin\LanguageTranslation\Interfaces\YouDaoConfigurationConstant;
 use Aliliin\LanguageTranslation\Traits\HasHttpRequest;
 
@@ -27,16 +32,15 @@ class YouDao extends AbstractProvider implements YouDaoConfigurationConstant
             'from' => self::getLanguageFrom($this->config),
             'to' => self::getLanguageTo($this->config),
             'signType' => self::TRANSLATION_SIGN_TYPE,
-
         );
-        $curtime = strtotime("now");
+        $curtime = strtotime('now');
         $args['curtime'] = $curtime;
-        $signStr = $appKey . self::truncate($fromLanguage) . $salt . $curtime . $secKey;
-        $args['sign'] = hash("sha256", $signStr);
+        $signStr = $appKey.self::truncate($fromLanguage).$salt.$curtime.$secKey;
+        $args['sign'] = hash('sha256', $signStr);
 
         $ret = false;
         $i = 0;
-        while ($ret === false) {
+        while (false === $ret) {
             if ($i > 1) {
                 break;
             }
@@ -44,15 +48,16 @@ class YouDao extends AbstractProvider implements YouDaoConfigurationConstant
                 sleep(1);
             }
             $ret = self::callOnce(self::TRANSLATION_INFO_URL, $args, 'post', false, 2000, array());
-            $i++;
+            ++$i;
         }
+
         return $ret;
     }
 
-    private static function callOnce($url, $args = null, $method = "get", $withCookie = false, $timeout = CURL_TIMEOUT, $headers = array())
+    private static function callOnce($url, $args = null, $method = 'get', $withCookie = false, $timeout = CURL_TIMEOUT, $headers = array())
     {
         $ch = curl_init();
-        if ($method == "post") {
+        if ('post' == $method) {
             $data = self::convert($args);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
             curl_setopt($ch, CURLOPT_POST, 1);
@@ -76,13 +81,15 @@ class YouDao extends AbstractProvider implements YouDaoConfigurationConstant
         $r = curl_exec($ch);
 
         curl_close($ch);
+
         return $r;
     }
 
     private static function truncate($q)
     {
         $len = self::abslength($q);
-        return $len <= 20 ? $q : (mb_substr($q, 0, 10) . $len . mb_substr($q, $len - 10, $len));
+
+        return $len <= 20 ? $q : (mb_substr($q, 0, 10).$len.mb_substr($q, $len - 10, $len));
     }
 
     private static function abslength($str)
@@ -93,7 +100,8 @@ class YouDao extends AbstractProvider implements YouDaoConfigurationConstant
         if (function_exists('mb_strlen')) {
             return mb_strlen($str, 'utf-8');
         } else {
-            preg_match_all("/./u", $str, $ar);
+            preg_match_all('/./u', $str, $ar);
+
             return count($ar[0]);
         }
     }
@@ -101,29 +109,29 @@ class YouDao extends AbstractProvider implements YouDaoConfigurationConstant
     private static function getLanguageFrom(array $languageArray)
     {
         $from = $languageArray[\strtolower(self::PROVIDER_NAME)]['language']['from'];
+
         return empty($languageArray[\strtolower(self::PROVIDER_NAME)]['language']['from']) ? 'auto' : $from;
     }
-
 
     private static function getLanguageTo(array $languageArray)
     {
         $to = $languageArray[\strtolower(self::PROVIDER_NAME)]['language']['to'];
+
         return empty($languageArray[\strtolower(self::PROVIDER_NAME)]['language']['to']) ? 'auto' : $to;
     }
-
 
     private static function spliceUrl($data, $url = self::TRANSLATION_INFO_URL)
     {
         if ($data) {
-            if (stripos($url, "?") > 0) {
+            if (stripos($url, '?') > 0) {
                 $url .= "&$data";
             } else {
                 $url .= "?$data";
             }
         }
+
         return $url;
     }
-
 
     private static function convert(&$args)
     {
@@ -132,21 +140,22 @@ class YouDao extends AbstractProvider implements YouDaoConfigurationConstant
             foreach ($args as $key => $val) {
                 if (is_array($val)) {
                     foreach ($val as $k => $v) {
-                        $data .= $key . '[' . $k . ']=' . rawurlencode($v) . '&';
+                        $data .= $key.'['.$k.']='.rawurlencode($v).'&';
                     }
                 } else {
-                    $data .= "$key=" . rawurlencode($val) . "&";
+                    $data .= "$key=".rawurlencode($val).'&';
                 }
             }
-            return trim($data, "&");
+
+            return trim($data, '&');
         }
+
         return $args;
     }
 
     /**
      * @return string
      */
-
     public function getProviderName()
     {
         return static::PROVIDER_NAME;
@@ -154,6 +163,7 @@ class YouDao extends AbstractProvider implements YouDaoConfigurationConstant
 
     /**
      * @param array $configArray
+     *
      * @return string
      */
     private static function getProviderAppKey(array $configArray)
@@ -163,25 +173,23 @@ class YouDao extends AbstractProvider implements YouDaoConfigurationConstant
 
     /**
      * @param array $configArray
-     * @return string
      *
+     * @return string
      */
-
     private static function getProviderSecKey(array $configArray)
     {
         return $configArray[\strtolower(self::PROVIDER_NAME)]['provider']['sec_key'];
-
     }
 
     private static function create_guid()
     {
         $microTime = microtime();
-        list($a_dec, $a_sec) = explode(" ", $microTime);
+        list($a_dec, $a_sec) = explode(' ', $microTime);
         $dec_hex = dechex($a_dec * 1000000);
         $sec_hex = dechex($a_sec);
         self::ensure_length($dec_hex, 5);
         self::ensure_length($sec_hex, 6);
-        $guid = "";
+        $guid = '';
         $guid .= $dec_hex;
         $guid .= self::create_guid_section(3);
         $guid .= '-';
@@ -193,15 +201,17 @@ class YouDao extends AbstractProvider implements YouDaoConfigurationConstant
         $guid .= '-';
         $guid .= $sec_hex;
         $guid .= self::create_guid_section(6);
+
         return $guid;
     }
 
     private static function create_guid_section($characters)
     {
-        $return = "";
-        for ($i = 0; $i < $characters; $i++) {
+        $return = '';
+        for ($i = 0; $i < $characters; ++$i) {
             $return .= dechex(mt_rand(0, 15));
         }
+
         return $return;
     }
 
@@ -209,8 +219,8 @@ class YouDao extends AbstractProvider implements YouDaoConfigurationConstant
     {
         $strlen = strlen($string);
         if ($strlen < $length) {
-            $string = str_pad($string, $length, "0");
-        } else if ($strlen > $length) {
+            $string = str_pad($string, $length, '0');
+        } elseif ($strlen > $length) {
             $string = substr($string, 0, $length);
         }
     }

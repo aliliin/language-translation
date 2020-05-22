@@ -3,7 +3,7 @@
 /*
  * This file is part of the aliliin/language-translation.
  *
- * (c) Aliliin <PhperAli@Gmail.com>
+ * (c) aliliin <PhperAli@Gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -25,8 +25,8 @@ trait HasHttpRequest
      * Make a get request.
      *
      * @param string $endpoint
-     * @param array $query
-     * @param array $headers
+     * @param array  $query
+     * @param array  $headers
      *
      * @return array
      */
@@ -42,8 +42,8 @@ trait HasHttpRequest
      * Make a post request.
      *
      * @param string $endpoint
-     * @param array $params
-     * @param array $headers
+     * @param array  $params
+     * @param array  $headers
      *
      * @return array
      */
@@ -77,7 +77,7 @@ trait HasHttpRequest
      *
      * @param string $method
      * @param string $endpoint
-     * @param array $options http://docs.guzzlephp.org/en/latest/request-options.html
+     * @param array  $options  http://docs.guzzlephp.org/en/latest/request-options.html
      *
      * @return array
      */
