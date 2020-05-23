@@ -13,7 +13,7 @@
 ## Installing
 
 ```shell
-$ composer require aliliin/language-translation -vvv
+$ composer require aliliin/language-translation dev-master  -vvv
 ```
 
 ## Usage
