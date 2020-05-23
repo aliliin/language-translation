@@ -4,6 +4,10 @@
 
 [![Build Status](https://travis-ci.com/aliliin/language-translation.svg?branch=master)](https://travis-ci.com/aliliin/language-translation)
 ![StyleCI build status](https://github.styleci.io/repos/266182741/shield)
+[![Latest Stable Version](https://poser.pugx.org/aliliin/language-translation/v)](//packagist.org/packages/aliliin/language-translation)
+[![Latest Unstable Version](https://poser.pugx.org/aliliin/language-translation/v/unstable)](//packagist.org/packages/aliliin/language-translation)
+[![Total Downloads](https://poser.pugx.org/aliliin/language-translation/downloads)](//packagist.org/packages/aliliin/language-translation)
+[![License](https://poser.pugx.org/aliliin/language-translation/license)](//packagist.org/packages/aliliin/language-translation)
 
 
 ## Installing
