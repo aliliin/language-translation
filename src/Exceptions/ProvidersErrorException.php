@@ -1,8 +1,15 @@
 <?php
 
+/*
+ * This file is part of the aliliin/language-translation.
+ *
+ * (c) aliliin <PhperAli@Gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
 
 namespace Aliliin\LanguageTranslation\Exceptions;
-
 
 class ProvidersErrorException extends Exception
 {
@@ -15,8 +22,8 @@ class ProvidersErrorException extends Exception
      * ProvidersErrorException constructor.
      *
      * @param string $message
-     * @param int $code
-     * @param array $raw
+     * @param int    $code
+     * @param array  $raw
      */
     public function __construct($message, $code, array $raw = [])
     {
