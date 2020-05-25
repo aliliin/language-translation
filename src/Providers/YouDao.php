@@ -13,6 +13,7 @@ namespace Aliliin\LanguageTranslation\Providers;
 
 use Aliliin\LanguageTranslation\Exceptions\HttpException;
 use Aliliin\LanguageTranslation\Exceptions\InquiryErrorException;
+use Aliliin\LanguageTranslation\Exceptions\ProvidersErrorException;
 use Aliliin\LanguageTranslation\Interfaces\YouDaoConfigurationConstant;
 use Aliliin\LanguageTranslation\Traits\HasHttpRequest;
 
@@ -35,61 +36,22 @@ class YouDao extends AbstractProvider implements YouDaoConfigurationConstant
         );
         $curtime = strtotime('now');
         $args['curtime'] = $curtime;
-        $signStr = $appKey.self::truncate($fromLanguage).$salt.$curtime.$secKey;
+        $signStr = $appKey . self::truncate($fromLanguage) . $salt . $curtime . $secKey;
         $args['sign'] = hash('sha256', $signStr);
 
-        $ret = false;
-        $i = 0;
-        while (false === $ret) {
-            if ($i > 1) {
-                break;
-            }
-            if ($i > 0) {
-                sleep(1);
-            }
-            $ret = self::callOnce(self::TRANSLATION_INFO_URL, $args, 'post', false, 2000, array());
-            ++$i;
+        $result = $this->post(self::TRANSLATION_INFO_URL, $args);
+
+        if (isset($result['errorCode']) && 0 != $result['errorCode']) {
+            throw new ProvidersErrorException('error', $result['errorCode'], $result);
         }
-
-        return $ret;
-    }
-
-    private static function callOnce($url, $args = null, $method = 'get', $withCookie = false, $timeout = CURL_TIMEOUT, $headers = array())
-    {
-        $ch = curl_init();
-        if ('post' == $method) {
-            $data = self::convert($args);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-            curl_setopt($ch, CURLOPT_POST, 1);
-        } else {
-            $data = self::convert($args);
-            if ($data) {
-                $url = self::spliceUrl($data, self::TRANSLATION_INFO_URL);
-            }
-        }
-
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-        if (!empty($headers)) {
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        }
-        if ($withCookie) {
-            curl_setopt($ch, CURLOPT_COOKIEJAR, $_COOKIE);
-        }
-        $r = curl_exec($ch);
-
-        curl_close($ch);
-
-        return $r;
+        return $result;
     }
 
     private static function truncate($q)
     {
         $len = self::abslength($q);
 
-        return $len <= 20 ? $q : (mb_substr($q, 0, 10).$len.mb_substr($q, $len - 10, $len));
+        return $len <= 20 ? $q : (mb_substr($q, 0, 10) . $len . mb_substr($q, $len - 10, $len));
     }
 
     private static function abslength($str)
@@ -118,47 +80,6 @@ class YouDao extends AbstractProvider implements YouDaoConfigurationConstant
         $to = $languageArray[\strtolower(self::PROVIDER_NAME)]['language']['to'];
 
         return empty($languageArray[\strtolower(self::PROVIDER_NAME)]['language']['to']) ? 'auto' : $to;
-    }
-
-    private static function spliceUrl($data, $url = self::TRANSLATION_INFO_URL)
-    {
-        if ($data) {
-            if (stripos($url, '?') > 0) {
-                $url .= "&$data";
-            } else {
-                $url .= "?$data";
-            }
-        }
-
-        return $url;
-    }
-
-    private static function convert(&$args)
-    {
-        $data = '';
-        if (is_array($args)) {
-            foreach ($args as $key => $val) {
-                if (is_array($val)) {
-                    foreach ($val as $k => $v) {
-                        $data .= $key.'['.$k.']='.rawurlencode($v).'&';
-                    }
-                } else {
-                    $data .= "$key=".rawurlencode($val).'&';
-                }
-            }
-
-            return trim($data, '&');
-        }
-
-        return $args;
-    }
-
-    /**
-     * @return string
-     */
-    public function getProviderName()
-    {
-        return static::PROVIDER_NAME;
     }
 
     /**

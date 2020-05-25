@@ -10,15 +10,44 @@
 [![License](https://poser.pugx.org/aliliin/language-translation/license)](//packagist.org/packages/aliliin/language-translation)
 
 
-## Installing
+## 介绍
+ 
+ 目前已支持有道平台
+ 
+ * [有道智云](https://ai.youdao.com/gw.s)
+
+
+## 安装
 
 ```shell
 $ composer require aliliin/language-translation dev-master  -vvv
 ```
 
-## Usage
+## 使用
 
-TODO
+```php	
+require_once __DIR__ . '/vendor/autoload.php';
+
+use Aliliin\LanguageTranslation\Translation;
+
+$config = [
+    'provider' => 'youdao',
+    'youdao' => [
+        'provider' => [
+            'app_key' => 'xxxxxxx',
+            'sec_key' => 'xxxxxxxx',
+        ],
+        'language' => [ 
+            'from' => 'zh-CHS',
+            'to' => 'en',
+        ]
+    ],
+];
+
+$translation = new Translation($config);
+$res = $translation->translation('高兴');
+
+```	
 
 ## Contributing
 
