@@ -16,7 +16,7 @@ use Aliliin\LanguageTranslation\Exceptions\InvalidArgumentException;
 class Factory
 {
     protected $config;
-    
+
     /**
      * Factory constructor.
      *

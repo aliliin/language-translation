@@ -36,7 +36,7 @@ class YouDao extends AbstractProvider implements YouDaoConfigurationConstant
         );
         $curtime = strtotime('now');
         $args['curtime'] = $curtime;
-        $signStr = $appKey . self::truncate($fromLanguage) . $salt . $curtime . $secKey;
+        $signStr = $appKey.self::truncate($fromLanguage).$salt.$curtime.$secKey;
         $args['sign'] = hash('sha256', $signStr);
 
         $result = $this->post(self::TRANSLATION_INFO_URL, $args);
@@ -44,6 +44,7 @@ class YouDao extends AbstractProvider implements YouDaoConfigurationConstant
         if (isset($result['errorCode']) && 0 != $result['errorCode']) {
             throw new ProvidersErrorException('error', $result['errorCode'], $result);
         }
+
         return $result;
     }
 
@@ -51,7 +52,7 @@ class YouDao extends AbstractProvider implements YouDaoConfigurationConstant
     {
         $len = self::abslength($q);
 
-        return $len <= 20 ? $q : (mb_substr($q, 0, 10) . $len . mb_substr($q, $len - 10, $len));
+        return $len <= 20 ? $q : (mb_substr($q, 0, 10).$len.mb_substr($q, $len - 10, $len));
     }
 
     private static function abslength($str)

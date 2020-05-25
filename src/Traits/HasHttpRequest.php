@@ -25,8 +25,8 @@ trait HasHttpRequest
      * Make a get request.
      *
      * @param string $endpoint
-     * @param array $query
-     * @param array $headers
+     * @param array  $query
+     * @param array  $headers
      *
      * @return array
      */
@@ -42,8 +42,8 @@ trait HasHttpRequest
      * Make a post request.
      *
      * @param string $endpoint
-     * @param array $params
-     * @param array $headers
+     * @param array  $params
+     * @param array  $headers
      *
      * @return array
      */
@@ -77,7 +77,7 @@ trait HasHttpRequest
      *
      * @param string $method
      * @param string $endpoint
-     * @param array $options http://docs.guzzlephp.org/en/latest/request-options.html
+     * @param array  $options  http://docs.guzzlephp.org/en/latest/request-options.html
      *
      * @return array
      */
@@ -126,7 +126,6 @@ trait HasHttpRequest
     {
         $contentType = $response->getHeaderLine('Content-Type');
         $contents = $response->getBody()->getContents();
-
 
         if (false !== stripos($contentType, 'json') || stripos($contentType, 'javascript')) {
             return json_decode($contents, true);
