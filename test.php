@@ -1,6 +1,15 @@
 <?php
 
-require_once __DIR__ .'/vendor/autoload.php';
+/*
+ * This file is part of the aliliin/language-translation.
+ *
+ * (c) aliliin <PhperAli@Gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
+require_once __DIR__.'/vendor/autoload.php';
 
 $config = [
     'provider' => 'youdao',
@@ -17,4 +26,4 @@ $config = [
 ];
 
 $translation = new \Aliliin\LanguageTranslation\Translation($config);
-var_dump($translation->translation('高兴'));die;
+var_dump($translation->translation('高兴')); die;
