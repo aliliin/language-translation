@@ -45,19 +45,28 @@ $config = [
 ];
 
 $translation = new Translation($config);
+
+
+```
+
+## 获取翻译结果
+```
 $res = $translation->translation('高兴');
-
 ```	
+示例：
+```
+[
+    "happy",
+]
+```
 
-## Contributing
+## 参数说明
+```
+ translation(string $language) 
+```
+> -` $language ` - 需要翻译的词语
 
-You can contribute in one of three ways:
 
-1. File bug reports using the [issue tracker](https://github.com/aliliin/language-translation/issues).
-2. Answer questions or fix bugs on the [issue tracker](https://github.com/aliliin/language-translation/issues).
-3. Contribute new features or update the wiki.
-
-_The code contribution process is not very formal. You just need to make sure that you follow the PSR-0, PSR-1, and PSR-2 coding guidelines. Any new code contributions must be accompanied by unit tests where applicable._
 
 ## License
 
