@@ -25,7 +25,7 @@ interface YouDaoConfigurationConstant
 
     const TRANSLATION_EXT = false;
 
-    const TRANSLATION_VOICE = false; //0为女声，1为男声。默认为女声
+    const TRANSLATION_VOICE = false; // 0为女声，1为男声。默认为女声
 
     const TRANSLATION_STRICT = false; // 是否严格按照指定from和to进行翻译：true/false	false	如果为false，则会自动中译英，英译中。默认为false
 }

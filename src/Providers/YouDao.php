@@ -36,7 +36,7 @@ class YouDao extends AbstractProvider implements YouDaoConfigurationConstant
         );
         $curtime = strtotime('now');
         $args['curtime'] = $curtime;
-        $signStr = $appKey.self::truncate($fromLanguage).$salt.$curtime.$secKey;
+        $signStr = $appKey . self::truncate($fromLanguage) . $salt . $curtime . $secKey;
         $args['sign'] = hash('sha256', $signStr);
 
         $result = $this->post(self::TRANSLATION_INFO_URL, $args);
@@ -45,14 +45,14 @@ class YouDao extends AbstractProvider implements YouDaoConfigurationConstant
             throw new ProvidersErrorException('error', $result['errorCode'], $result);
         }
 
-        return $result;
+        return $result['translation'];
     }
 
     private static function truncate($q)
     {
         $len = self::abslength($q);
 
-        return $len <= 20 ? $q : (mb_substr($q, 0, 10).$len.mb_substr($q, $len - 10, $len));
+        return $len <= 20 ? $q : (mb_substr($q, 0, 10) . $len . mb_substr($q, $len - 10, $len));
     }
 
     private static function abslength($str)
@@ -73,14 +73,14 @@ class YouDao extends AbstractProvider implements YouDaoConfigurationConstant
     {
         $from = $languageArray[\strtolower(self::PROVIDER_NAME)]['language']['from'];
 
-        return empty($languageArray[\strtolower(self::PROVIDER_NAME)]['language']['from']) ? 'auto' : $from;
+        return empty($from) ? self::TRANSLATION_FORM : $from;
     }
 
     private static function getLanguageTo(array $languageArray)
     {
         $to = $languageArray[\strtolower(self::PROVIDER_NAME)]['language']['to'];
 
-        return empty($languageArray[\strtolower(self::PROVIDER_NAME)]['language']['to']) ? 'auto' : $to;
+        return empty($languageArray[\strtolower(self::PROVIDER_NAME)]['language']['to']) ? self::TRANSLATION_TO : $to;
     }
 
     /**
@@ -111,6 +111,7 @@ class YouDao extends AbstractProvider implements YouDaoConfigurationConstant
         $sec_hex = dechex($a_sec);
         self::ensure_length($dec_hex, 5);
         self::ensure_length($sec_hex, 6);
+
         $guid = '';
         $guid .= $dec_hex;
         $guid .= self::create_guid_section(3);
