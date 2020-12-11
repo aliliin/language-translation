@@ -13,7 +13,7 @@ namespace Aliliin\LanguageTranslation\Tests\Providers;
 
 use Aliliin\LanguageTranslation\Providers\YouDao;
 use PHPUnit\Framework\TestCase;
-use  Mockery;
+use Mockery;
 
 class YouDaoTest extends TestCase
 {

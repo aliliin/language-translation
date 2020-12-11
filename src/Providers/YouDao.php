@@ -26,14 +26,14 @@ class YouDao extends AbstractProvider implements YouDaoConfigurationConstant
         $appKey = self::getProviderAppKey($this->config);
         $secKey = self::getProviderSecKey($this->config);
         $salt = self::create_guid();
-        $args = array(
+        $args = [
             'q' => $fromLanguage,
             'appKey' => $appKey,
             'salt' => $salt,
             'from' => self::getLanguageFrom($this->config),
             'to' => self::getLanguageTo($this->config),
             'signType' => self::TRANSLATION_SIGN_TYPE,
-        );
+        ];
         $curtime = strtotime('now');
         $args['curtime'] = $curtime;
         $signStr = $appKey.self::truncate($fromLanguage).$salt.$curtime.$secKey;
@@ -84,8 +84,6 @@ class YouDao extends AbstractProvider implements YouDaoConfigurationConstant
     }
 
     /**
-     * @param array $configArray
-     *
      * @return string
      */
     private static function getProviderAppKey(array $configArray)
@@ -94,8 +92,6 @@ class YouDao extends AbstractProvider implements YouDaoConfigurationConstant
     }
 
     /**
-     * @param array $configArray
-     *
      * @return string
      */
     private static function getProviderSecKey(array $configArray)
