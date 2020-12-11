@@ -21,7 +21,7 @@ interface YouDaoConfigurationConstant
 
     const TRANSLATION_TO = 'auto';     //目标语言
 
-    const  TRANSLATION_SIGN_TYPE = 'v3'; // 签名类型
+    const TRANSLATION_SIGN_TYPE = 'v3'; // 签名类型
 
     const TRANSLATION_EXT = false;
 

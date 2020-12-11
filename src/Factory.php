@@ -19,8 +19,6 @@ class Factory
 
     /**
      * Factory constructor.
-     *
-     * @param array $config
      */
     public function __construct(array $config)
     {
