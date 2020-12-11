@@ -23,7 +23,6 @@ class ProvidersErrorException extends Exception
      *
      * @param string $message
      * @param int    $code
-     * @param array  $raw
      */
     public function __construct($message, $code, array $raw = [])
     {
